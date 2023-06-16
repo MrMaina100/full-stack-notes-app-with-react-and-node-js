@@ -42,7 +42,6 @@ const MenuBar = () => {
               <p className="text-black">Log Out</p>
             </MenuItem>
           )}
-          <MenuItem onClick={getToken}>Token</MenuItem>
         </MenuList>
       </Menu>
     </div>
