@@ -1,8 +1,9 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const NoteRoutes = require("./routes/NotesRoutes");
-const connectDB = require("./config/db");
+import dotenv from "dotenv"
+dotenv.config()
+import express from"express";
+import cors from"cors";
+import NotesRoutes from "./routes/NotesRoutes.js"
+import connectDB from"./config/db.js";
 
 const app = express();
 
@@ -13,7 +14,7 @@ connectDB();
 
 const PORT = process.env.PORT;
 
-app.use("/notes", NoteRoutes);
+app.use("/notes", NotesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);

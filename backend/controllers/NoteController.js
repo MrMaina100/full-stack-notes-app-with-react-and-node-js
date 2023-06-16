@@ -1,19 +1,19 @@
-const Note = require("../models/NoteModel");
+import Note from "../models/NoteModel.js";
 
 // get all notes
 // GET request
-async function getNotes(req, res) {
+export const getNotes = async (req, res) => {
   try {
     const notes = await Note.find({ email: req.user.email });
     res.json(notes);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-}
+};
 
 // create new note
 // POST request
-const addNote = async (req, res) => {
+export const addNote = async (req, res) => {
   const { title, note } = req.body;
 
   try {
@@ -30,7 +30,7 @@ const addNote = async (req, res) => {
 
 // delete a note from the database
 // DELETE request
-const deleteNote = async (req, res) => {
+export const deleteNote = async (req, res) => {
   const { id } = req.params;
   try {
     const deletedNote = await Note.findByIdAndDelete({ _id: id });
@@ -42,7 +42,7 @@ const deleteNote = async (req, res) => {
 
 // udpate a note in the database
 // PATCH request
-const updateNote = (req, res) => {
+export const updateNote = (req, res) => {
   const { id } = req.params;
   const { newNote } = req.body;
   try {
@@ -60,4 +60,4 @@ const updateNote = (req, res) => {
   }
 };
 
-module.exports = { getNotes, addNote, deleteNote, updateNote };
+

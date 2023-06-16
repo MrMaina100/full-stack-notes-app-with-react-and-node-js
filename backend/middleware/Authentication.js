@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 const Authentication = async (req, res, next) => {
   try {
@@ -28,4 +28,6 @@ const Authentication = async (req, res, next) => {
   }
 };
 
-module.exports = Authentication;
+
+export default Authentication
+

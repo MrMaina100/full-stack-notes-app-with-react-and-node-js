@@ -1,12 +1,12 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   addNote,
   deleteNote,
   updateNote,
   getNotes,
-} = require("../controllers/NoteController");
+} from "../controllers/NoteController.js";
 
-const Authentication = require("../middleware/Authentication");
+import Authentication from "../middleware/Authentication.js";
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.get("/", Authentication, getNotes);
 router.put("/:id", updateNote);
 router.delete("/:id", deleteNote);
 
-module.exports = router;
+export default router;
