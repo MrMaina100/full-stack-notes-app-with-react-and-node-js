@@ -15,7 +15,7 @@ async function getNotes(req, res) {
 // POST request
 const addNote = async (req, res) => {
   const { title, note } = req.body;
-  console.log({ title, note });
+
   try {
     const newNote = await Note.create({
       email: req.user.email,
