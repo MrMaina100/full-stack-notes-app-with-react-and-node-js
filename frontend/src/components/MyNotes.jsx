@@ -34,7 +34,7 @@ const MyNotes = () => {
   };
 
   const deletNote = async (id) => {
-    const res = await fetch(`https://notes-api-kiprono.onrender.com/${id}`, {
+    const res = await fetch(`https://notes-api-kiprono.onrender.com/notes/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
