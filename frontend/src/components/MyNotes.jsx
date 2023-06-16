@@ -22,7 +22,7 @@ const MyNotes = () => {
   }
 
   const getNotes = async () => {
-    const res = await fetch("http://localhost:5000/notes/", {
+    const res = await fetch("https://notes-api-kiprono.onrender.com/notes/", {
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ const MyNotes = () => {
   };
 
   const deletNote = async (id) => {
-    const res = await fetch(`http://localhost:5000/notes/${id}`, {
+    const res = await fetch(`https://notes-api-kiprono.onrender.com/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

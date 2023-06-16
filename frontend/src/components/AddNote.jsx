@@ -19,7 +19,7 @@ const AddNote = () => {
   const addNote = async () => {
     const token = await getToken();
 
-    const res = await fetch("http://localhost:5000/notes/", {
+    const res = await fetch("https://notes-api-kiprono.onrender.com/notes/", {
       method: "POST",
       body: JSON.stringify({ title, note }),
       headers: {
