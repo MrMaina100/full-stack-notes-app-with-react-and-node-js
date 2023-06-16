@@ -10,8 +10,8 @@ const Authentication = require("../middleware/Authentication");
 
 const router = express.Router();
 
-router.post("/",Authentication, addNote);
-router.get("/",Authentication, getNotes);
+router.post("/", Authentication, addNote);
+router.get("/", Authentication, getNotes);
 router.put("/:id", updateNote);
 router.delete("/:id", deleteNote);
 

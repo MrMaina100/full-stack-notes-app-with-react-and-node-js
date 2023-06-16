@@ -15,6 +15,7 @@ const MyNotes = () => {
   const getToken = async () => {
     const token = await getAccessTokenSilently();
     setToken(token);
+    console.log(token);
   };
 
   if (user) {
