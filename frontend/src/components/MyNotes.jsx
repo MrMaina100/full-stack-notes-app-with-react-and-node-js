@@ -75,7 +75,9 @@ const MyNotes = () => {
   console.dir(notes);
 
   const formatDate = (date) => {
-    const today = formatDistanceToNow(new Date(date).toLocaleString());
+    const today = formatDistanceToNow(new Date(date).toLocaleString(), {
+      addSuffix: true,
+    });
     return today;
   };
   return (
