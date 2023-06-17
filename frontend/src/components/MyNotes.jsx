@@ -89,10 +89,15 @@ const MyNotes = () => {
         ) : (
           notes
             .sort((a, b) => {
-              return (
-                new Date(a.createdAt).toLocaleString() -
-                new Date(b.createdAt).toLocaleString()
-              );
+              
+                if(new Date(a.createdAt).toLocaleString()  > new Date(b.createdAt).toLocaleString()){
+
+                  return -1
+
+                }else{
+                  return 1
+                }
+             
             })
             .map((note, index) => {
               return (
