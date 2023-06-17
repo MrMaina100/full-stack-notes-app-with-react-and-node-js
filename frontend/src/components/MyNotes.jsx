@@ -3,6 +3,7 @@ import { FaTrash, FaTrashAlt } from "react-icons/fa";
 import { NoteContext } from "../context/NoteContext";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useToast } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 
 const MyNotes = () => {
   const toast = useToast();
@@ -12,6 +13,9 @@ const MyNotes = () => {
   const { getAccessTokenSilently, user } = useAuth0();
 
   const [token, setToken] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const getToken = async () => {
     const token = await getAccessTokenSilently();
@@ -24,12 +28,14 @@ const MyNotes = () => {
   }
 
   const getNotes = async () => {
+    setIsLoading(true);
     const res = await fetch("https://notes-api-kiprono.onrender.com/notes/", {
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${token}`,
       },
     });
+    setIsLoading(false);
     const data = await res.json();
     setNotes(data);
   };
@@ -46,6 +52,7 @@ const MyNotes = () => {
       }
     );
     const data = await res.json();
+
     console.log(data);
     removeNote(id);
 
@@ -73,33 +80,41 @@ const MyNotes = () => {
     <div className="p-6">
       <p className="text-center font-bold mb-6">My Notes</p>
       <div className="max-w-7xl m-auto p-6 bg-[#dee2d5] rounded-lg">
-        {notes
-          .sort((a, b) => {
-            return (
-              new Date(a.createdAt).toLocaleString() -
-              new Date(b.createdAt).toLocaleString()
-            );
-          })
-          .map((note, index) => {
-            return (
-              <div
-                key={note._id}
-                className="flex items-center justify-between bg-white p-2 rounded mt-4"
-              >
-                <div className="">
-                  <p className="font-bold text-xl">{note.title}</p>
-                  <p>{note.note}</p>
-                  <p>{formatDate(note.createdAt)}</p>
-                </div>
+        {!user ? (
+          "Please Log in to view your notes"
+        ) : isLoading ? (
+          <Spinner />
+        ) : !notes.length ? (
+          "No notes to show, please add a note"
+        ) : (
+          notes
+            .sort((a, b) => {
+              return (
+                new Date(a.createdAt).toLocaleString() -
+                new Date(b.createdAt).toLocaleString()
+              );
+            })
+            .map((note, index) => {
+              return (
                 <div
-                  onClick={() => deletNote(note._id)}
-                  className="cursor-pointer"
+                  key={note._id}
+                  className="flex items-center justify-between bg-white p-2 rounded mt-4"
                 >
-                  <FaTrashAlt />
+                  <div className="">
+                    <p className="font-bold text-xl">{note.title}</p>
+                    <p>{note.note}</p>
+                    <p>{formatDate(note.createdAt)}</p>
+                  </div>
+                  <div
+                    onClick={() => deletNote(note._id)}
+                    className="cursor-pointer"
+                  >
+                    <FaTrashAlt />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+        )}
       </div>
     </div>
   );
