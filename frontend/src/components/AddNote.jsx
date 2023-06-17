@@ -46,8 +46,8 @@ const AddNote = () => {
   };
   return (
     <div className="p-6">
-      <p className="text-center font-bold mt-4">Add Note</p>
-      <div className="max-w-7xl m-auto p-6 flex  justify-center border bg-[#dee2d5] rounded-lg mt-6">
+      <p className="text-center font-bold ">Add Note</p>
+      <div className="max-w-7xl m-auto p-4 flex  justify-center border bg-[#dee2d5] rounded-lg mt-6">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -56,7 +56,7 @@ const AddNote = () => {
           className="flex flex-col "
         >
           <div>
-            <label htmlFor="">Title</label>
+            <label htmlFor="">Title </label>
             <input
               value={title}
               required
@@ -71,7 +71,7 @@ const AddNote = () => {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               type="text"
-              className=" border border-gray-400 ml-8 p-2 rounded-lg h-32 text-sm sm:w-96"
+              className=" border border-gray-400 ml-8 p-2 rounded-lg text-sm sm:w-96"
             />
           </div>
           <Button
