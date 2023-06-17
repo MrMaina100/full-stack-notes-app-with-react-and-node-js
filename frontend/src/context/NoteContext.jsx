@@ -17,8 +17,12 @@ export const NoteContextProvider = ({ children }) => {
       position: "top",
     });
   };
+
+  const removeNote = (id) => {
+    setNotes(notes.filter((note) => note._id !== id));
+  };
   return (
-    <NoteContext.Provider value={{ updateNotes, notes }}>
+    <NoteContext.Provider value={{ updateNotes, notes, setNotes, removeNote }}>
       {children}
     </NoteContext.Provider>
   );

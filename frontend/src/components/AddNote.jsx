@@ -6,6 +6,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 const AddNote = () => {
   const toast = useToast();
 
+  const { updateNotes } = useContext(NoteContext);
+
   const { getAccessTokenSilently } = useAuth0();
 
   const [title, setTitle] = useState("");
@@ -29,6 +31,7 @@ const AddNote = () => {
     });
     const newNote = await res.json();
     console.log(newNote)
+    updateNotes(newNote)
     toast({
       title: `${newNote.title} added`,
       status: "success",
