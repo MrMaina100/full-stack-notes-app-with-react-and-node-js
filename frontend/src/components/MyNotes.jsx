@@ -5,6 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useToast } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/react";
 
+import { formatDistanceToNow } from "date-fns";
+
 const MyNotes = () => {
   const toast = useToast();
 
@@ -73,7 +75,7 @@ const MyNotes = () => {
   console.dir(notes);
 
   const formatDate = (date) => {
-    const today = new Date(date).toLocaleDateString();
+    const today = formatDistanceToNow(new Date(date).toLocaleDateString());
     return today;
   };
   return (
@@ -89,16 +91,14 @@ const MyNotes = () => {
         ) : (
           notes
             .sort((a, b) => {
-              
-                if(new Date(a.createdAt).toLocaleString()  > new Date(b.createdAt).toLocaleString()){
-
-                  return -1
-
-                }else{
-                  return 1
-                }
-             
-                
+              if (
+                new Date(a.createdAt).toLocaleString() >
+                new Date(b.createdAt).toLocaleString()
+              ) {
+                return -1;
+              } else {
+                return 1;
+              }
             })
             .map((note, index) => {
               return (
