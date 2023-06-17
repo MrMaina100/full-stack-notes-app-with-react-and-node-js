@@ -10,12 +10,6 @@ export const NoteContextProvider = ({ children }) => {
 
   const updateNotes = (note) => {
     setNotes([...notes, note]);
-    toast({
-      title: "Note added",
-      status: "success",
-      isClosable: true,
-      position: "top",
-    });
   };
 
   const removeNote = (id) => {
