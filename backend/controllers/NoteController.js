@@ -4,7 +4,9 @@ import Note from "../models/NoteModel.js";
 // GET request
 export const getNotes = async (req, res) => {
   try {
-    const notes = await Note.find({ email: req.user.email });
+    const notes = await Note.find({ email: req.user.email }).sort({
+      createdAt: 1,
+    });
     res.json(notes);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -59,5 +61,3 @@ export const updateNote = (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
-

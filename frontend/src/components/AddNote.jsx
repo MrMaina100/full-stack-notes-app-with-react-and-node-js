@@ -38,7 +38,6 @@ const AddNote = () => {
     toast({
       title: `${newNote.title} added`,
       status: "success",
-      description: "Refresh page to view it",
       isClosable: true,
       position: "top",
     });
