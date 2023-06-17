@@ -13,6 +13,8 @@ const AddNote = () => {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const getToken = async () => {
     const token = await getAccessTokenSilently();
     return token;
@@ -20,7 +22,7 @@ const AddNote = () => {
 
   const addNote = async () => {
     const token = await getToken();
-
+    setIsLoading(true);
     const res = await fetch("https://notes-api-kiprono.onrender.com/notes/", {
       method: "POST",
       body: JSON.stringify({ title, note }),
@@ -30,8 +32,9 @@ const AddNote = () => {
       },
     });
     const newNote = await res.json();
-    console.log(newNote)
-    updateNotes(newNote)
+    setIsLoading(false);
+    console.log(newNote);
+    updateNotes(newNote);
     toast({
       title: `${newNote.title} added`,
       status: "success",
@@ -72,7 +75,12 @@ const AddNote = () => {
               className=" border border-gray-400 ml-8 p-2 rounded-lg h-32 text-sm sm:w-96"
             />
           </div>
-          <Button type="submit" colorScheme="facebook" className="mt-4">
+          <Button
+            isLoading={isLoading}
+            type="submit"
+            colorScheme="facebook"
+            className="mt-4"
+          >
             Add Note
           </Button>
         </form>
