@@ -98,6 +98,7 @@ const MyNotes = () => {
                   return 1
                 }
              
+                
             })
             .map((note, index) => {
               return (
