@@ -5,7 +5,7 @@ import Note from "../models/NoteModel.js";
 export const getNotes = async (req, res) => {
   try {
     const notes = await Note.find({ email: req.user.email }).sort({
-      createdAt: 1,
+      createdAt: -1,
     });
     res.json(notes);
   } catch (error) {
