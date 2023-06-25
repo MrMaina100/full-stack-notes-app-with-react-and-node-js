@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Button, useToast } from "@chakra-ui/react";
 import { NoteContext } from "../context/NoteContext";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AddNote = () => {
   const toast = useToast();
@@ -13,8 +15,6 @@ const AddNote = () => {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const getToken = async () => {
     const token = await getAccessTokenSilently();
     return token;
@@ -22,7 +22,7 @@ const AddNote = () => {
 
   const addNote = async () => {
     const token = await getToken();
-    setIsLoading(true);
+
     const res = await fetch("https://notes-api-kiprono.onrender.com/notes/", {
       method: "POST",
       body: JSON.stringify({ title, note }),
@@ -32,7 +32,10 @@ const AddNote = () => {
       },
     });
     const newNote = await res.json();
-    setIsLoading(false);
+    if (!res.ok) {
+      throw Error(newNote.error);
+    }
+
     console.log(newNote);
     updateNotes(newNote);
     toast({
@@ -43,7 +46,19 @@ const AddNote = () => {
     });
     setTitle("");
     setNote("");
+    return newNote;
   };
+
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading, isError, error } = useMutation(addNote, {
+    onSuccess: (data) => {
+      queryClient.setQueryData(["notes"], (old) => {
+        return [...old, data];
+      });
+    },
+  });
+
   return (
     <div className="p-6">
       <p className="text-center font-bold ">Add Note</p>
@@ -51,7 +66,7 @@ const AddNote = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            addNote();
+            mutate({ title, note });
           }}
           className="flex flex-col "
         >
@@ -82,6 +97,7 @@ const AddNote = () => {
           >
             Add Note
           </Button>
+          {isError && <div className="text-red-800">{error.message}</div>}
         </form>
       </div>
     </div>
