@@ -116,7 +116,7 @@ const MyNotes = () => {
                   <div className="">
                     <p className="font-bold text-xl">{note.title}</p>
                     <p>{note.note}</p>
-                    <p>{formatDate(note.createdAt)}</p>
+                    <p className="text-sm italic">{formatDate(note.createdAt)}</p>
                   </div>
                   <div
                     onClick={() => deletNote(note._id)}
